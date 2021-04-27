@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\lenovo\\source\\repos\\DontBiteMeBoss\\DontBiteMeBoss.csproj": {}
+    "C:\\dev\\DontBiteMeBoss\\DontBiteMeBoss\\DontBiteMeBoss.csproj": {}
   },
   "projects": {
-    "C:\\Users\\lenovo\\source\\repos\\DontBiteMeBoss\\DontBiteMeBoss.csproj": {
+    "C:\\dev\\DontBiteMeBoss\\DontBiteMeBoss\\DontBiteMeBoss.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\lenovo\\source\\repos\\DontBiteMeBoss\\DontBiteMeBoss.csproj",
+        "projectUniqueName": "C:\\dev\\DontBiteMeBoss\\DontBiteMeBoss\\DontBiteMeBoss.csproj",
         "projectName": "DontBiteMeBoss",
-        "projectPath": "C:\\Users\\lenovo\\source\\repos\\DontBiteMeBoss\\DontBiteMeBoss.csproj",
+        "projectPath": "C:\\dev\\DontBiteMeBoss\\DontBiteMeBoss\\DontBiteMeBoss.csproj",
         "packagesPath": "C:\\Users\\lenovo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\lenovo\\source\\repos\\DontBiteMeBoss\\obj\\",
+        "outputPath": "C:\\dev\\DontBiteMeBoss\\DontBiteMeBoss\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
