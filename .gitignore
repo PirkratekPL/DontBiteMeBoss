@@ -445,3 +445,11 @@ DontBiteMeBoss/.vs/DontBiteMeBoss/config/applicationhost.config
 DontBiteMeBoss/.vs/DontBiteMeBoss/DesignTimeBuild/.dtbcache.v2
 DontBiteMeBoss/obj/Debug/net5.0/DontBiteMeBoss.assets.cache
 DontBiteMeBoss/obj/DontBiteMeBoss.csproj.nuget.dgspec.json
+DontBiteMeBoss/.vs/DontBiteMeBoss/DesignTimeBuild/.dtbcache.v2
+*.cache
+
+DontBiteMeBoss\DontBiteMeBoss.vs\DontBiteMeBoss\config\applicationhost.config
+DontBiteMeBoss\DontBiteMeBoss.vs\DontBiteMeBoss\DesignTimeBuild.dtbcache.v2
+DontBiteMeBoss\DontBiteMeBoss.vs\DontBiteMeBoss\v16.suo
+DontBiteMeBoss\DontBiteMeBoss\bin\Debug\*
+DontBiteMeBoss\DontBiteMeBoss\obj\Debug\*
