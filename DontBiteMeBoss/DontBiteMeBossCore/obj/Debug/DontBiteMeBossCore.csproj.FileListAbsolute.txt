@@ -1,0 +1,6 @@
+C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossCore\bin\Debug\DontBiteMeBossCore.dll
+C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossCore\bin\Debug\DontBiteMeBossCore.pdb
+C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossCore\obj\Debug\DontBiteMeBossCore.csproj.CoreCompileInputs.cache
+C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossCore\obj\Debug\DontBiteMeBossCore.dll
+C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossCore\obj\Debug\DontBiteMeBossCore.pdb
+C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossCore\obj\Debug\DontBiteMeBossCore.csprojAssemblyReference.cache

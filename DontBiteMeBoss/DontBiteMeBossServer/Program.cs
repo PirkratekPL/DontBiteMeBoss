@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DontBiteMeBossServer
+namespace DontBiteMeBoss.Server
 {
     class Program
     {

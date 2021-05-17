@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace DontBiteMeBossClient
+namespace DontBiteMeBoss.Client
 {
     /// <summary>
     /// This is the main type for your game.
@@ -11,6 +11,9 @@ namespace DontBiteMeBossClient
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        private int windowWidth = 1280;
+        private int windowHeight = 720;
 
         public DontBiteMeBossClient()
         {
@@ -27,7 +30,9 @@ namespace DontBiteMeBossClient
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            //Content.Load<Texture2D>("Content/assets/sprites/cursor");
+            this.IsMouseVisible = true;
+            SetWindowSize(windowWidth, windowHeight);
             base.Initialize();
         }
 
@@ -78,6 +83,13 @@ namespace DontBiteMeBossClient
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
+        }
+
+        private void SetWindowSize(int width, int height)
+        {
+            graphics.PreferredBackBufferWidth = width;
+            graphics.PreferredBackBufferHeight = height;
+            graphics.ApplyChanges();
         }
     }
 }

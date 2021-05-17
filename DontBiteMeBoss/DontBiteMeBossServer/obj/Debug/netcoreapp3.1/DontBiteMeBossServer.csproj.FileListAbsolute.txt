@@ -1,0 +1,13 @@
+C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossServer\bin\Debug\netcoreapp3.1\DontBiteMeBossServer.exe
+C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossServer\bin\Debug\netcoreapp3.1\DontBiteMeBossServer.deps.json
+C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossServer\bin\Debug\netcoreapp3.1\DontBiteMeBossServer.runtimeconfig.json
+C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossServer\bin\Debug\netcoreapp3.1\DontBiteMeBossServer.runtimeconfig.dev.json
+C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossServer\bin\Debug\netcoreapp3.1\DontBiteMeBossServer.dll
+C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossServer\bin\Debug\netcoreapp3.1\DontBiteMeBossServer.pdb
+C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossServer\obj\Debug\netcoreapp3.1\DontBiteMeBossServer.csprojAssemblyReference.cache
+C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossServer\obj\Debug\netcoreapp3.1\DontBiteMeBossServer.AssemblyInfoInputs.cache
+C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossServer\obj\Debug\netcoreapp3.1\DontBiteMeBossServer.AssemblyInfo.cs
+C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossServer\obj\Debug\netcoreapp3.1\DontBiteMeBossServer.csproj.CoreCompileInputs.cache
+C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossServer\obj\Debug\netcoreapp3.1\DontBiteMeBossServer.dll
+C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossServer\obj\Debug\netcoreapp3.1\DontBiteMeBossServer.pdb
+C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossServer\obj\Debug\netcoreapp3.1\DontBiteMeBossServer.genruntimeconfig.cache
