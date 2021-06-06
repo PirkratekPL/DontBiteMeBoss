@@ -17,17 +17,20 @@ namespace DontBiteMeBoss.Core
     public class Lobby
     {
         private Guid _guid;
+        private string _name;
         private int _maxPlayers;
         private LobbyStatus status;
-        private List<Player> players;
+        private List<Player> players = new List<Player>();
         private Player _leader;
         public Guid ID { get { return _guid; } }
-
-        public Lobby(Guid guid, int maxPlayers, Player leader)
+        public int CurrentPlayers { get { return players.Count; } }
+        public Lobby(Guid guid, string name, int maxPlayers, Player leader)
         {
             _guid = guid;
+            _name = name;
             _maxPlayers = maxPlayers;
             _leader = leader;
+            players.Add(leader);
         }
         public void SetPlayerReadyStatus(Player player, bool isReady)
         {

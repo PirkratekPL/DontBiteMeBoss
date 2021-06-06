@@ -19,6 +19,7 @@ namespace DontBiteMeBoss.Client
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            SetWindowSize(windowWidth, windowHeight);
         }
 
         /// <summary>
@@ -32,7 +33,8 @@ namespace DontBiteMeBoss.Client
             // TODO: Add your initialization logic here
             //Content.Load<Texture2D>("Content/assets/sprites/cursor");
             this.IsMouseVisible = true;
-            SetWindowSize(windowWidth, windowHeight);
+            MainMenu mm = new MainMenu(this);
+            this.Components.Add(mm);
             base.Initialize();
         }
 

@@ -24,3 +24,5 @@ C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossClient\bin\Windows\x86\Debug\
 C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossClient\obj\x86\Debug\DontBiteMeBossClient.csproj.CopyComplete
 C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossClient\obj\x86\Debug\DontBiteMeBossClient.exe
 C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossClient\obj\x86\Debug\DontBiteMeBossClient.pdb
+C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossClient\bin\Windows\x86\Debug\Content\defaultFont.xnb
+C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossClient\bin\Windows\x86\Debug\MonoGame.UI.Forms.dll

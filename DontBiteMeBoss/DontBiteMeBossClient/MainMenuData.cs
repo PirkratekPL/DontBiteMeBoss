@@ -5,9 +5,9 @@ using DontBiteMeBoss.Core;
 
 namespace DontBiteMeBoss.Client
 {
-    public struct MainMenuData
+    public class MainMenuData
     {
-        private List<Lobby> _lobbies; //list of all lobbies
+        private List<Lobby> _lobbies = new List<Lobby>(); //list of all lobbies
         private User currentUser; //user info to display
         private bool _showAllLobbies;  //toggle to show hidden and started lobbies
 
