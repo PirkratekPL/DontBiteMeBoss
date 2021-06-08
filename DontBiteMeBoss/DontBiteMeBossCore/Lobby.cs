@@ -16,33 +16,32 @@ namespace DontBiteMeBoss.Core
     }
     public class Lobby
     {
-        private Guid _guid;
+        private String UUID;
         private string _name;
         private int _maxPlayers;
         private LobbyStatus status;
-        private List<Player> players = new List<Player>();
-        private Player _leader;
-        public Guid ID { get { return _guid; } }
+        private List<Client> players = new List<Client>();
+        private Client _leader;
         public int CurrentPlayers { get { return players.Count; } }
-        public Lobby(Guid guid, string name, int maxPlayers, Player leader)
+        public Lobby(string UUID, string name, int maxPlayers, Client leader)
         {
-            _guid = guid;
+            this.UUID = UUID;
             _name = name;
             _maxPlayers = maxPlayers;
             _leader = leader;
             players.Add(leader);
         }
-        public void SetPlayerReadyStatus(Player player, bool isReady)
+        public void SetPlayerReadyStatus(Client player, bool isReady)
         {
-            player.isReady = isReady;
+            //player.isReady = isReady;
         }
 
         private void CheckAllPlayersReady()
         {
             bool allReady = true;
-            foreach (Player player in players)
+            /*foreach (Client player in players)
                 if (!player.isReady)
-                    allReady = false;
+                    allReady = false;*/
 
             if (allReady)
                 SetLobbyStatus(LobbyStatus.AllReady);

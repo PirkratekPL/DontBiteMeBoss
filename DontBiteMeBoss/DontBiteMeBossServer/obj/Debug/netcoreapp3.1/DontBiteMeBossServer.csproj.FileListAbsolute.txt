@@ -11,3 +11,6 @@ C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossServer\obj\Debug\netcoreapp3.
 C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossServer\obj\Debug\netcoreapp3.1\DontBiteMeBossServer.dll
 C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossServer\obj\Debug\netcoreapp3.1\DontBiteMeBossServer.pdb
 C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossServer\obj\Debug\netcoreapp3.1\DontBiteMeBossServer.genruntimeconfig.cache
+C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossServer\bin\Debug\netcoreapp3.1\DontBiteMeBossCore.dll
+C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossServer\bin\Debug\netcoreapp3.1\DontBiteMeBossCore.pdb
+C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossServer\obj\Debug\netcoreapp3.1\DontBiteMeBossServer.csproj.CopyComplete

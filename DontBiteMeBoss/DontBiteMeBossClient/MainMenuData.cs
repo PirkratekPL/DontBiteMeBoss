@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using DontBiteMeBoss.Core;
 
-namespace DontBiteMeBoss.Client
+namespace DontBiteMeBoss.ClientSide
 {
     public class MainMenuData
     {
         private List<Lobby> _lobbies = new List<Lobby>(); //list of all lobbies
-        private User currentUser; //user info to display
         private bool _showAllLobbies;  //toggle to show hidden and started lobbies
 
         public List<Lobby> Lobbies { get { return _lobbies; } }
@@ -25,7 +24,7 @@ namespace DontBiteMeBoss.Client
 
         public void RemoveLobby(Guid ID)
         {
-            _lobbies.RemoveAll((lobby) => ID == lobby.ID);
+           // _lobbies.RemoveAll((lobby) => ID == lobby.UUID);
         }
     }
 }

@@ -4,6 +4,16 @@
     "C:\\dev\\DontBiteMeBoss\\DontBiteMeBoss\\DontBiteMeBossServer\\DontBiteMeBossServer.csproj": {}
   },
   "projects": {
+    "C:\\dev\\DontBiteMeBoss\\DontBiteMeBoss\\DontBiteMeBossCore\\DontBiteMeBossCore.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\dev\\DontBiteMeBoss\\DontBiteMeBoss\\DontBiteMeBossCore\\DontBiteMeBossCore.csproj",
+        "projectName": "DontBiteMeBossCore",
+        "projectPath": "C:\\dev\\DontBiteMeBoss\\DontBiteMeBoss\\DontBiteMeBossCore\\DontBiteMeBossCore.csproj"
+      },
+      "frameworks": {
+        "net45": {}
+      }
+    },
     "C:\\dev\\DontBiteMeBoss\\DontBiteMeBoss\\DontBiteMeBossServer\\DontBiteMeBossServer.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -30,7 +40,11 @@
         "frameworks": {
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\dev\\DontBiteMeBoss\\DontBiteMeBoss\\DontBiteMeBossCore\\DontBiteMeBossCore.csproj": {
+                "projectPath": "C:\\dev\\DontBiteMeBoss\\DontBiteMeBoss\\DontBiteMeBossCore\\DontBiteMeBossCore.csproj"
+              }
+            }
           }
         },
         "warningProperties": {

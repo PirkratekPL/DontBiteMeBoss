@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DontBiteMeBoss.Client
+namespace DontBiteMeBoss.ClientSide
 {
     public class MainMenu : ControlManager
     {
@@ -79,6 +79,16 @@ namespace DontBiteMeBoss.Client
                     Line LnSeparator = new Line(new Vector2(windowRect.Width * 0.11f, windowRect.Height * 0.2f + windowRect.Height * 0.1f * i), new Vector2(windowRect.Width * 0.69f, windowRect.Height * 0.2f + windowRect.Height * 0.1f * i));
                     Controls.Add(LnSeparator);
                 }
+            }
+            if(mmData == null || mmData.Lobbies.Count == 0)
+            {
+                Label lbl = new Label()
+                {
+                    Text = "No lobbies found. Consider creating a new one.",
+                    Size = new Vector2(windowRect.Width * 0.58f, windowRect.Height * 0.1f),
+                    Location = new Vector2(windowRect.Width * 0.11f, windowRect.Height * 0.2f),
+                    BackgroundColor = Color.LightGray,
+                };
             }
         }
 

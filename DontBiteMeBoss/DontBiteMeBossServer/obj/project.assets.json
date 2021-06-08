@@ -1,11 +1,29 @@
 {
   "version": 3,
   "targets": {
-    ".NETCoreApp,Version=v3.1": {}
+    ".NETCoreApp,Version=v3.1": {
+      "DontBiteMeBossCore/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/DontBiteMeBossCore.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DontBiteMeBossCore.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "DontBiteMeBossCore/1.0.0": {
+      "type": "project",
+      "path": "../DontBiteMeBossCore/DontBiteMeBossCore.csproj",
+      "msbuildProject": "../DontBiteMeBossCore/DontBiteMeBossCore.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    ".NETCoreApp,Version=v3.1": []
+    ".NETCoreApp,Version=v3.1": [
+      "DontBiteMeBossCore >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\lenovo\\.nuget\\packages\\": {},
@@ -37,7 +55,11 @@
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\dev\\DontBiteMeBoss\\DontBiteMeBoss\\DontBiteMeBossCore\\DontBiteMeBossCore.csproj": {
+              "projectPath": "C:\\dev\\DontBiteMeBoss\\DontBiteMeBoss\\DontBiteMeBossCore\\DontBiteMeBossCore.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

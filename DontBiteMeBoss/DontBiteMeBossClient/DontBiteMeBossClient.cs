@@ -1,8 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using DontBiteMeBoss.Core;
+using System.Threading;
+using System.Collections.Generic;
+using System;
 
-namespace DontBiteMeBoss.Client
+namespace DontBiteMeBoss.ClientSide
 {
     /// <summary>
     /// This is the main type for your game.
@@ -11,6 +15,11 @@ namespace DontBiteMeBoss.Client
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        public StartingScreenMenu ssMenu;
+        public MainMenu mMenu;
+        public Client thisClient;
+        public bool isConnectedToServer = false;
+        public Thread ServerConnectionThread = new Thread(CommunicationProc);
 
         private int windowWidth = 1280;
         private int windowHeight = 720;
@@ -33,8 +42,10 @@ namespace DontBiteMeBoss.Client
             // TODO: Add your initialization logic here
             //Content.Load<Texture2D>("Content/assets/sprites/cursor");
             this.IsMouseVisible = true;
-            MainMenu mm = new MainMenu(this);
-            this.Components.Add(mm);
+            ssMenu = new StartingScreenMenu(this);
+            mMenu = new MainMenu(this);
+
+            this.Components.Add(ssMenu);
             base.Initialize();
         }
 
@@ -57,6 +68,7 @@ namespace DontBiteMeBoss.Client
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
+
         }
 
         /// <summary>
@@ -92,6 +104,25 @@ namespace DontBiteMeBoss.Client
             graphics.PreferredBackBufferWidth = width;
             graphics.PreferredBackBufferHeight = height;
             graphics.ApplyChanges();
+        }
+
+        protected override void OnExiting(object sender, EventArgs args)
+        {
+            thisClient.socket.Disconnect(false);
+            thisClient.socket.Close();
+            ServerConnectionThread.Abort();
+            base.OnExiting(sender, args);
+        }
+
+        public static void CommunicationProc(object arg0)
+        {
+            object[] parameters = (object[])arg0;
+            Client client = (Client)parameters[0];
+            DontBiteMeBossClient game = (DontBiteMeBossClient)parameters[1];
+            while(client.socket.Connected)
+            {
+                client.streamReader.ReadToEnd();
+            }
         }
     }
 }

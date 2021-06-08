@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DontBiteMeBoss.Client
+namespace DontBiteMeBoss.ClientSide
 {
 #if WINDOWS || LINUX
     /// <summary>

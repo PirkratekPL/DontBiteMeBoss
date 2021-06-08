@@ -7,14 +7,27 @@
   "targets": {
     ".NETCoreApp,Version=v3.1": {
       "DontBiteMeBossServer/1.0.0": {
+        "dependencies": {
+          "DontBiteMeBossCore": "1.0.0"
+        },
         "runtime": {
           "DontBiteMeBossServer.dll": {}
+        }
+      },
+      "DontBiteMeBossCore/1.0.0": {
+        "runtime": {
+          "DontBiteMeBossCore.dll": {}
         }
       }
     }
   },
   "libraries": {
     "DontBiteMeBossServer/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "DontBiteMeBossCore/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

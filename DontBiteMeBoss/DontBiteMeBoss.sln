@@ -4,9 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DontBiteMeBossServer", "DontBiteMeBossServer\DontBiteMeBossServer.csproj", "{37A29520-F798-4142-B554-EF929706D398}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A69C1DA4-782C-4AD3-A2C9-1FDFEAD8FB5E} = {A69C1DA4-782C-4AD3-A2C9-1FDFEAD8FB5E}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DontBiteMeBossClient", "DontBiteMeBossClient\DontBiteMeBossClient.csproj", "{A69C1DA4-782C-4AD3-A2C9-1FDFEAD8FB5E}"
 	ProjectSection(ProjectDependencies) = postProject
