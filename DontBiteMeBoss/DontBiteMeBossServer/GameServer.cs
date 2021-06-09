@@ -17,9 +17,12 @@ namespace DontBiteMeBoss.Server
 
         TcpListener tcpListener;
         private bool isRunning = false;
+        public static GameServer Instance;
 
         public GameServer(string ip, int port)
         {
+            if (Instance == null)
+                Instance = this;
             this.serverIp = ip;
             this.serverPort = port;
         }
@@ -60,13 +63,23 @@ namespace DontBiteMeBoss.Server
 
         private void ClientConnectionProc(object obj)
         {
-            Client cl = (Client)obj;
-            while (cl.socket.Poll(1000, SelectMode.SelectWrite))
+            Client client = (Client)obj;
+            string command;
+            while (client.socket.Connected)
             {
-
+                if ((command = client?.Read()) != string.Empty)
+                {
+                    Log(client.UUID, command);
+                    ServerCommand.ActOnCommand(client, command);
+                }
             }
-            Clients.Remove(cl);
-            Log(null, "Client disconnected!");
+        }
+
+        public void CreateLobby(string lobbyName, string clientUUID)
+        {
+            Lobby lb = new Lobby(Guid.NewGuid().ToString().Replace("-", "").Substring(0, 5), lobbyName);
+            Lobbies.Add(lb);
+            //TODO: call to clients that Lobby was Created
         }
 
         public static void Log(object sender, string message)

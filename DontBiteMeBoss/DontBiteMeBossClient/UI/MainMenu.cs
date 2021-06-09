@@ -12,27 +12,24 @@ namespace DontBiteMeBoss.ClientSide
     public class MainMenu : ControlManager
     {
         User user;
-        MainMenuData mmData;
+        public MainMenuData mmData;
         Rectangle windowRect;
-        Game game;
+        DontBiteMeBossClient game;
         List<Button> BtnsLobbies = new List<Button>();
 
         public MainMenu(Game game) : base(game)
         {
-            this.game = game;
+            this.game = (DontBiteMeBossClient)game;
             windowRect = game.Window.ClientBounds;
-            //TODO: ask server for lobby data
-            //temp
-            /*
+        }
+
+        public override void Initialize()
+        {
+            //ask server for lobby data
             mmData = new MainMenuData();
-            Player pl = new Player();
-            pl.user = new User(Guid.NewGuid(), "Drag", 123L);
-            Lobby lb = new Lobby(Guid.NewGuid(), "test lobby", 8, pl);
-            mmData.AddLobby(lb);
-            mmData.AddLobby(lb);
-            mmData.AddLobby(lb);
-            mmData.AddLobby(lb);
-            mmData.AddLobby(lb);*/
+            ClientCommand.AskForLobbyData(game.thisClient);
+
+            base.Initialize();
         }
 
         public override void InitializeComponent()
@@ -85,7 +82,8 @@ namespace DontBiteMeBoss.ClientSide
                 Label lbl = new Label()
                 {
                     Text = "No lobbies found. Consider creating a new one.",
-                    Size = new Vector2(windowRect.Width * 0.58f, windowRect.Height * 0.1f),
+                    TextColor = Color.Black,
+                    Size = new Vector2(windowRect.Width * 0.58f, windowRect.Height * 0.3f),
                     Location = new Vector2(windowRect.Width * 0.11f, windowRect.Height * 0.2f),
                     BackgroundColor = Color.LightGray,
                 };
@@ -94,7 +92,8 @@ namespace DontBiteMeBoss.ClientSide
 
         private void BtnCreateLobby_Clicked(object sender, EventArgs e)
         {
-            //TODO: Ask server to create lobby and join it
+            //Ask server to create lobby and join it
+            ClientCommand.AskToCreateLobby(game.thisClient, /*lobbyName*/ "New Lobby");
         }
     }
 }

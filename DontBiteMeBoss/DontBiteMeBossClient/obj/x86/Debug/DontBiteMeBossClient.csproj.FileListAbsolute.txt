@@ -26,3 +26,5 @@ C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossClient\obj\x86\Debug\DontBite
 C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossClient\obj\x86\Debug\DontBiteMeBossClient.pdb
 C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossClient\bin\Windows\x86\Debug\Content\defaultFont.xnb
 C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossClient\bin\Windows\x86\Debug\MonoGame.UI.Forms.dll
+C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossClient\bin\Windows\x86\Debug\System.ValueTuple.dll
+C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossClient\bin\Windows\x86\Debug\System.ValueTuple.xml

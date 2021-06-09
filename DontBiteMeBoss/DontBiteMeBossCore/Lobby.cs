@@ -16,20 +16,28 @@ namespace DontBiteMeBoss.Core
     }
     public class Lobby
     {
-        private String UUID;
-        private string _name;
-        private int _maxPlayers;
-        private LobbyStatus status;
+        public string UUID;
+        public string _name;
+        public int _maxPlayers;
+        public LobbyStatus status;
         private List<Client> players = new List<Client>();
-        private Client _leader;
-        public int CurrentPlayers { get { return players.Count; } }
-        public Lobby(string UUID, string name, int maxPlayers, Client leader)
+        private string _leadersUUID;
+        public int CurrentPlayers;
+
+        public Lobby(string UUID, string name)
+        {
+            this.UUID = UUID;
+            _name = name;
+            _maxPlayers = 4;
+            CurrentPlayers = 0;
+        }
+        public Lobby(string UUID, string name, int maxPlayers, int currentPlayers, string leadersUUID)
         {
             this.UUID = UUID;
             _name = name;
             _maxPlayers = maxPlayers;
-            _leader = leader;
-            players.Add(leader);
+            this.CurrentPlayers = currentPlayers;
+            _leadersUUID = leadersUUID;
         }
         public void SetPlayerReadyStatus(Client player, bool isReady)
         {

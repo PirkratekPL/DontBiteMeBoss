@@ -26,5 +26,10 @@ namespace DontBiteMeBoss.ClientSide
         {
            // _lobbies.RemoveAll((lobby) => ID == lobby.UUID);
         }
+
+        public void RemoveAllLobbies()
+        {
+            _lobbies.Clear();
+        }
     }
 }

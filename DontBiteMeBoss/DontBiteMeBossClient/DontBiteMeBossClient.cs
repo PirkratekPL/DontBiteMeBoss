@@ -23,9 +23,13 @@ namespace DontBiteMeBoss.ClientSide
 
         private int windowWidth = 1280;
         private int windowHeight = 720;
+        private static DontBiteMeBossClient instance;
+        public static DontBiteMeBossClient Get { get { return instance; } }
 
         public DontBiteMeBossClient()
         {
+            if (instance == null)
+                instance = this;
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             SetWindowSize(windowWidth, windowHeight);
@@ -108,8 +112,7 @@ namespace DontBiteMeBoss.ClientSide
 
         protected override void OnExiting(object sender, EventArgs args)
         {
-            thisClient.socket.Disconnect(false);
-            thisClient.socket.Close();
+            //TODO: send disconnect message
             ServerConnectionThread.Abort();
             base.OnExiting(sender, args);
         }
@@ -119,9 +122,13 @@ namespace DontBiteMeBoss.ClientSide
             object[] parameters = (object[])arg0;
             Client client = (Client)parameters[0];
             DontBiteMeBossClient game = (DontBiteMeBossClient)parameters[1];
-            while(client.socket.Connected)
+            while (client.socket.Connected)
             {
-                client.streamReader.ReadToEnd();
+                string message = client.streamReader.ReadLine();
+                if (message != string.Empty)
+                {
+                    ClientCommand.ActOnResponse(client, message);
+                }
             }
         }
     }

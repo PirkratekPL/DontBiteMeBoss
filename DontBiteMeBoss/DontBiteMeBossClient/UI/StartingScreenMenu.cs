@@ -13,13 +13,13 @@ namespace DontBiteMeBoss.ClientSide
 {
     public class StartingScreenMenu : ControlManager
     {
-        Game game;
+        DontBiteMeBossClient game;
         Rectangle windowRect;
         private Button InfoLabel;
         private bool isConnected = false;
         public StartingScreenMenu(Game game) : base(game)
         {
-            this.game = game;
+            this.game = (DontBiteMeBossClient)game;
             this.windowRect = game.Window.ClientBounds;
         }
         public void SetScreenText(string text)
@@ -64,23 +64,18 @@ namespace DontBiteMeBoss.ClientSide
                     tcpClient = new TcpClient("127.0.0.1", 34343);
                     isConnected = true;
                     InfoLabel.Text = "Connected";
-                    (game as DontBiteMeBossClient).thisClient = new Client(tcpClient.Client);
-                    (game as DontBiteMeBossClient).ServerConnectionThread.Start(new object[] { (game as DontBiteMeBossClient).thisClient, game });
+                    game.thisClient = new Client(tcpClient.Client);
+                    ClientCommand.AskForUUID(game.thisClient);
+                    game.ServerConnectionThread.Start(new object[] { game.thisClient, game });
 
-                    game.Components.Remove((game as DontBiteMeBossClient).ssMenu);
-                    game.Components.Add((game as DontBiteMeBossClient).mMenu);
+                    game.Components.Remove(game.ssMenu);
+                    game.Components.Add(game.mMenu);
                 }
                 catch (Exception ex)
                 {
                     InfoLabel.Text = "Cant connect to server! Try again later";
                 }
             }
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-
-            base.Update(gameTime);
         }
     }
 }
