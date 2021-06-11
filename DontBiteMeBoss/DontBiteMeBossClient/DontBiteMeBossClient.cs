@@ -124,10 +124,21 @@ namespace DontBiteMeBoss.ClientSide
             DontBiteMeBossClient game = (DontBiteMeBossClient)parameters[1];
             while (client.socket.Connected)
             {
-                string message = client.streamReader.ReadLine();
-                if (message != string.Empty)
+                try
                 {
-                    ClientCommand.ActOnResponse(client, message);
+                    string message = client.streamReader.ReadLine();
+                    if (message != string.Empty)
+                    {
+                        ClientCommand.ActOnResponse(client, message);
+                    }
+                }
+                catch(System.IO.IOException ex)
+                {
+                    client?.Send("Disconnect|IOException");
+                }
+                catch(Exception ex)
+                {
+                    game.Exit();
                 }
             }
         }

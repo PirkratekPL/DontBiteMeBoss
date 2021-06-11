@@ -15,8 +15,9 @@ namespace DontBiteMeBoss.ClientSide
         ChangeWeapon,       //UUID, string WeaponType
         ThrowGranade,       //UUID, float direction
         LoginAccepted,      //UUID, User.highscore
-        LobbyList,          //UUID, int count, Lobby[Lobby.UUID, string lobby.name, int lobby.maxplayers, int Lobby.currentPlayers string lobby.status
-        SetUUID,           //
+        LobbyList,          //UUID, int count, Lobby[Lobby.UUID, string lobby.name, int lobby.maxplayers, int Lobby.currentPlayers string lobby.status]
+        LobbyCreated,       //Lobby[Lobby.UUID, string lobby.name, int lobby.maxplayers, int Lobby.currentPlayers string lobby.status]
+        SetUUID,            //
         JoinLobby,          //UUID, int playersCount, Player[Player.UUID, string username, bool ready, bool isLeader]
         SomeneJoinedLobby,  //UUID, Player.UUID, string username, bool ready
         SomeoneLeftLobby,   //UUID
@@ -94,9 +95,18 @@ namespace DontBiteMeBoss.ClientSide
                     break;
                 case ServerCommandId.PlayerReadyChanged:
                     break;
-                default:
+                case ServerCommandId.None:
+                    break;
+                case ServerCommandId.LobbyCreated:
+                    Lobby lobby = new Lobby(data[1], data[2], int.Parse(data[3]), int.Parse(data[4]), data[5]);
+                    CreateLobby(client, lobby);
                     break;
             }
+        }
+
+        private static void CreateLobby(Client client, Lobby lobby)
+        {
+            DontBiteMeBossClient.Get.mMenu.AddLobbyToList(lobby);
         }
 
         private static void ClientSetLobbyList(Client client, string[] data)

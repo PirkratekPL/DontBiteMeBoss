@@ -20,8 +20,8 @@ namespace DontBiteMeBoss.Core
         public string _name;
         public int _maxPlayers;
         public LobbyStatus status;
-        private List<Client> players = new List<Client>();
-        private string _leadersUUID;
+        public List<LobbyClient> players = new List<LobbyClient>();
+        public string _leadersUUID;
         public int CurrentPlayers;
 
         public Lobby(string UUID, string name)
@@ -39,27 +39,39 @@ namespace DontBiteMeBoss.Core
             this.CurrentPlayers = currentPlayers;
             _leadersUUID = leadersUUID;
         }
-        public void SetPlayerReadyStatus(Client player, bool isReady)
+        public void SetPlayerReadyStatus(LobbyClient player, bool isReady)
         {
-            //player.isReady = isReady;
+            player.isReady = isReady;
+            CheckAllPlayersReady();
         }
 
         private void CheckAllPlayersReady()
         {
             bool allReady = true;
-            /*foreach (Client player in players)
+            foreach (LobbyClient player in players)
                 if (!player.isReady)
-                    allReady = false;*/
+                    allReady = false;
 
             if (allReady)
+            {
                 SetLobbyStatus(LobbyStatus.AllReady);
+
+            }
             else
+            {
                 SetLobbyStatus(LobbyStatus.WaitingForReady);
+            }
         }
 
         private void SetLobbyStatus(LobbyStatus status)
         {
             this.status = status;
+        }
+
+        public void AddPlayer(Client client)
+        {
+            players.Add(new LobbyClient(client));
+            ++CurrentPlayers;
         }
     }
 }

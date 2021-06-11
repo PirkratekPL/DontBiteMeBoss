@@ -67,19 +67,27 @@ namespace DontBiteMeBoss.Server
             string command;
             while (client.socket.Connected)
             {
-                if ((command = client?.Read()) != string.Empty)
+                try
                 {
-                    Log(client.UUID, command);
-                    ServerCommand.ActOnCommand(client, command);
+                    if (client != null && (command = client.Read()) != string.Empty)
+                    {
+                        Log(client.UUID, command);
+                        ServerCommand.ActOnCommand(client, command);
+                    }
+                } catch (Exception ex)
+                {
+                    client.socket.Disconnect(false);
+                    Clients.Remove(client);
+                    Error(client.UUID, ex);
                 }
             }
         }
 
-        public void CreateLobby(string lobbyName, string clientUUID)
+        public Lobby CreateLobby(string lobbyName, string clientUUID)
         {
             Lobby lb = new Lobby(Guid.NewGuid().ToString().Replace("-", "").Substring(0, 5), lobbyName);
             Lobbies.Add(lb);
-            //TODO: call to clients that Lobby was Created
+            return lb;
         }
 
         public static void Log(object sender, string message)

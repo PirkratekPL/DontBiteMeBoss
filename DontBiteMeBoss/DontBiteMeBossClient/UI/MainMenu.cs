@@ -16,6 +16,7 @@ namespace DontBiteMeBoss.ClientSide
         Rectangle windowRect;
         DontBiteMeBossClient game;
         List<Button> BtnsLobbies = new List<Button>();
+        Label LblnoLobbiesFound;
 
         public MainMenu(Game game) : base(game)
         {
@@ -64,36 +65,81 @@ namespace DontBiteMeBoss.ClientSide
                 {
                     Button BtnLobby = new Button()
                     {
-                        Text = "",
+                        Text = $"{mmData.Lobbies[i]._name}           {mmData.Lobbies[i].CurrentPlayers.ToString()}/{mmData.Lobbies[i]._maxPlayers.ToString()}",
+                        TextAlign = ContentAlignment.MiddleCenter,
                         Size = new Vector2(windowRect.Width * 0.58f, windowRect.Height * 0.1f),
                         Location = new Vector2(windowRect.Width * 0.11f, windowRect.Height * 0.2f + windowRect.Height * 0.1f * i),
                         BackgroundColor = Color.LightGray,
                     };
+                    BtnsLobbies.Add(BtnLobby);
+                    BtnLobby.Clicked += BtnLobby_Clicked;
                     Controls.Add(BtnLobby);
                 }
                 for (int i = 1; i < mmData.Lobbies.Count; ++i)
                 {
-                    Line LnSeparator = new Line(new Vector2(windowRect.Width * 0.11f, windowRect.Height * 0.2f + windowRect.Height * 0.1f * i), new Vector2(windowRect.Width * 0.69f, windowRect.Height * 0.2f + windowRect.Height * 0.1f * i));
+                    Line LnSeparator = new Line(new Vector2(windowRect.Width * 0.11f, windowRect.Height * 0.2f + windowRect.Height * 0.1f * i), new Vector2(windowRect.Width * 0.69f, windowRect.Height * 0.2f + windowRect.Height * 0.1f * i))
+                    {
+                        BackgroundColor = Color.Black,
+                    };
                     Controls.Add(LnSeparator);
                 }
             }
-            if(mmData == null || mmData.Lobbies.Count == 0)
+            LblnoLobbiesFound = new Label()
             {
-                Label lbl = new Label()
-                {
-                    Text = "No lobbies found. Consider creating a new one.",
-                    TextColor = Color.Black,
-                    Size = new Vector2(windowRect.Width * 0.58f, windowRect.Height * 0.3f),
-                    Location = new Vector2(windowRect.Width * 0.11f, windowRect.Height * 0.2f),
-                    BackgroundColor = Color.LightGray,
-                };
+                Text = "No lobbies found. Consider creating a new one.",
+                TextColor = Color.Black,
+                Size = new Vector2(windowRect.Width * 0.58f, windowRect.Height * 0.3f),
+                Location = new Vector2(windowRect.Width * 0.11f, windowRect.Height * 0.2f),
+                BackgroundColor = Color.LightGray,
+            };
+            if (mmData == null || mmData.Lobbies.Count <= 0)
+            {
+
+                Controls.Add(LblnoLobbiesFound);
             }
+        }
+
+        private void BtnLobby_Clicked(object sender, EventArgs e)
+        {
+            int index = BtnsLobbies.FindIndex((button) => ReferenceEquals(button, (Button)sender));
+            JoinLobby(mmData.Lobbies[index]);
+        }
+
+        private void JoinLobby(Lobby lobby)
+        {
+            if (lobby.CurrentPlayers < lobby._maxPlayers)
+                game.thisClient.Send($"JoinLobby|{lobby.UUID}");
         }
 
         private void BtnCreateLobby_Clicked(object sender, EventArgs e)
         {
             //Ask server to create lobby and join it
             ClientCommand.AskToCreateLobby(game.thisClient, /*lobbyName*/ "New Lobby");
+        }
+
+        public void AddLobbyToList(Lobby lobby)
+        {
+            if (Controls.Contains(LblnoLobbiesFound))
+                Controls.Remove(LblnoLobbiesFound);
+            Button lobbyBtn = new Button()
+            {
+                Text = $"{lobby._name}           {lobby.CurrentPlayers.ToString()}/{lobby._maxPlayers.ToString()}",
+                TextAlign = ContentAlignment.MiddleCenter,
+                Size = new Vector2(windowRect.Width * 0.58f, windowRect.Height * 0.1f),
+                Location = new Vector2(windowRect.Width * 0.11f, windowRect.Height * 0.2f + windowRect.Height * 0.1f * mmData.Lobbies.Count-1),
+                BackgroundColor = Color.LightGray,
+            };
+            if(mmData.Lobbies.Count>0)
+            {
+                Line LnSeparator = new Line(new Vector2(windowRect.Width * 0.11f, windowRect.Height * 0.2f + windowRect.Height * 0.1f * mmData.Lobbies.Count-1), new Vector2(windowRect.Width * 0.69f, windowRect.Height * 0.2f + windowRect.Height * 0.1f * mmData.Lobbies.Count - 1))
+                {
+                    BackgroundColor = Color.Black,
+                };
+                Controls.Add(LnSeparator);
+            }
+            mmData.AddLobby(lobby);
+            BtnsLobbies.Add(lobbyBtn);
+            Controls.Add(lobbyBtn);
         }
     }
 }
