@@ -29,28 +29,35 @@ namespace DontBiteMeBoss.Server
 
         public void StartServer()
         {
-            tcpListener = new TcpListener(IPAddress.Parse(serverIp), serverPort);
             Thread listenerThread = new Thread(StartListening);
             isRunning = true;
-            listenerThread.Start();
             Log(null, "Server started!");
+            listenerThread.Start();
+            while(isRunning)
+            {
+
+            }
         }
 
         private void StartListening()
         {
-            tcpListener.Start();
+            
 
             Log(null, "Started listening for clients.");
             try
             {
                 while (isRunning)
                 {
+                    tcpListener = new TcpListener(IPAddress.Parse(serverIp), serverPort++);
+                    tcpListener.Start();
                     TcpClient tcpClient = tcpListener.AcceptTcpClient();
                     Client client = new Client(Guid.NewGuid().ToString().Replace("-", "").Substring(0, 5), tcpClient.Client);
+                    client.user = new User("FunnyName", 0l);
                     Clients.Add(client);
                     Log(null, "Client connected");
                     Thread clientThread = new Thread(ClientConnectionProc);
                     clientThread.Start(client);
+                    tcpListener.Stop();
                 }
             }
             catch (Exception ex)
@@ -85,7 +92,7 @@ namespace DontBiteMeBoss.Server
 
         public Lobby CreateLobby(string lobbyName, string clientUUID)
         {
-            Lobby lb = new Lobby(Guid.NewGuid().ToString().Replace("-", "").Substring(0, 5), lobbyName);
+            Lobby lb = new Lobby(Guid.NewGuid().ToString().Replace("-", "").Substring(0, 5), lobbyName, clientUUID);
             Lobbies.Add(lb);
             return lb;
         }
@@ -105,7 +112,7 @@ namespace DontBiteMeBoss.Server
         {
             Console.ForegroundColor = ConsoleColor.Red;
             StringBuilder sb = new StringBuilder("[Error] ");
-            sb.Append(ex.Message);
+            sb.Append(ex.Message).Append("\n\t\t").Append(ex.StackTrace);
             if (sender != null)
             {
                 sb.Append("\n\tby ").Append(sender.ToString());
@@ -119,6 +126,18 @@ namespace DontBiteMeBoss.Server
             Console.ForegroundColor = ConsoleColor.Red;
             StringBuilder sb = new StringBuilder("[Error] ");
             sb.Append(error);
+            if (sender != null)
+            {
+                sb.Append("\n\tby ").Append(sender.ToString());
+            }
+            Console.WriteLine(sb.ToString());
+            Console.ResetColor();
+        }
+        public static void Error(object sender, Exception ex, int lineNumber)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            StringBuilder sb = new StringBuilder("[Error] ");
+            sb.Append(ex.Message);
             if (sender != null)
             {
                 sb.Append("\n\tby ").Append(sender.ToString());

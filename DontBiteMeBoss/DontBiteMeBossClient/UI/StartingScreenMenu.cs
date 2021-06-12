@@ -20,7 +20,11 @@ namespace DontBiteMeBoss.ClientSide
         public StartingScreenMenu(Game game) : base(game)
         {
             this.game = (DontBiteMeBossClient)game;
-            this.windowRect = game.Window.ClientBounds;
+            this.windowRect = new Rectangle(0, 0, this.game.windowWidth, this.game.windowHeight);
+        }
+        public override void Initialize()
+        {
+            base.Initialize();
         }
         public void SetScreenText(string text)
         {
@@ -57,11 +61,12 @@ namespace DontBiteMeBoss.ClientSide
         private void ConnectButton_Clicked(object sender, EventArgs e)
         {
             TcpClient tcpClient;
-            if (!isConnected)
+            int tries = 0;
+            while (!isConnected)
             {
                 try
                 {
-                    tcpClient = new TcpClient("127.0.0.1", 34343);
+                    tcpClient = new TcpClient("127.0.0.1", 34343 + tries);
                     isConnected = true;
                     InfoLabel.Text = "Connected";
                     game.thisClient = new Client(tcpClient.Client);
@@ -69,11 +74,13 @@ namespace DontBiteMeBoss.ClientSide
                     game.ServerConnectionThread.Start(new object[] { game.thisClient, game });
 
                     game.Components.Remove(game.ssMenu);
+                    game.ssMenu = null;
                     game.Components.Add(game.mMenu);
                 }
                 catch (Exception ex)
                 {
-                    InfoLabel.Text = "Cant connect to server! Try again later";
+                    InfoLabel.Text = $"Cant connect to server! Try {tries} out of 30";
+                    ++tries;
                 }
             }
         }

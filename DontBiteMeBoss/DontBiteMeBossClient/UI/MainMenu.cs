@@ -21,7 +21,7 @@ namespace DontBiteMeBoss.ClientSide
         public MainMenu(Game game) : base(game)
         {
             this.game = (DontBiteMeBossClient)game;
-            windowRect = game.Window.ClientBounds;
+            windowRect = new Rectangle(0,0,this.game.windowWidth, this.game.windowHeight);
         }
 
         public override void Initialize()
@@ -116,6 +116,12 @@ namespace DontBiteMeBoss.ClientSide
             //Ask server to create lobby and join it
             ClientCommand.AskToCreateLobby(game.thisClient, /*lobbyName*/ "New Lobby");
         }
+        public void UpdateLobbyButton(string lobbyUUID, int currentPlayers)
+        {
+            int index = mmData.Lobbies.FindIndex((lb) => lb.UUID == lobbyUUID);
+            mmData.Lobbies[index].CurrentPlayers = currentPlayers;
+            BtnsLobbies[index].Text = $"{mmData.Lobbies[index]._name}           {currentPlayers}/{mmData.Lobbies[index]._maxPlayers}";
+        }
 
         public void AddLobbyToList(Lobby lobby)
         {
@@ -129,6 +135,7 @@ namespace DontBiteMeBoss.ClientSide
                 Location = new Vector2(windowRect.Width * 0.11f, windowRect.Height * 0.2f + windowRect.Height * 0.1f * mmData.Lobbies.Count-1),
                 BackgroundColor = Color.LightGray,
             };
+            lobbyBtn.Clicked += BtnLobby_Clicked;
             if(mmData.Lobbies.Count>0)
             {
                 Line LnSeparator = new Line(new Vector2(windowRect.Width * 0.11f, windowRect.Height * 0.2f + windowRect.Height * 0.1f * mmData.Lobbies.Count-1), new Vector2(windowRect.Width * 0.69f, windowRect.Height * 0.2f + windowRect.Height * 0.1f * mmData.Lobbies.Count - 1))

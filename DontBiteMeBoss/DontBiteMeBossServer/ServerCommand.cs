@@ -1,7 +1,9 @@
 ﻿using DontBiteMeBoss.Core;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Runtime.CompilerServices;
 
 namespace DontBiteMeBoss.Server
 {
@@ -16,14 +18,18 @@ namespace DontBiteMeBoss.Server
             GetLobby,
             CreateLobby,
             JoinLobby,
+            Ready, //player set ready status to true
         }
 
         private static ClientCommandId GetCommandId(string command)
         {
+            if (command == string.Empty || command == null)
+                return ClientCommandId.Disconnect;
             string cmd = command.Split('|')[0];
             ClientCommandId result;
             if (System.Enum.TryParse<ClientCommandId>(cmd, true, out result))
                 return result;
+
             return ClientCommandId.None;
         }
 
@@ -57,18 +63,31 @@ namespace DontBiteMeBoss.Server
         }
         public static void SendClientJoinLobby(Client client, Lobby lobby)
         {
-            if (lobby.CurrentPlayers < lobby._maxPlayers)
-                client.Send($"JoinLobby|{lobby.UUID}");
+            client.Send($"JoinLobby|{lobby.UUID}");
+            foreach (Client cl in GameServer.Instance.Clients)
+            {
+                if (cl.UUID != client.UUID)
+                    cl.Send($"SomeneJoinedLobby|{lobby.UUID}|{client.UUID}|{cl.user.Username}|{lobby.CurrentPlayers}");
+            }
         }
         private static void SendLobbyData(Client client, Lobby lobby)
         {
-            StringBuilder sb = new StringBuilder($"LobbyData|{lobby._leadersUUID}|{lobby.CurrentPlayers}|{lobby._maxPlayers}|{lobby.status.ToString()}");
-            foreach(LobbyClient player in lobby.players)
+            StringBuilder sb = new StringBuilder($"LobbyData|{lobby._leadersUUID}|{lobby.CurrentPlayers}|{lobby._maxPlayers}");
+            foreach (LobbyClient player in lobby.players)
             {
-                sb.Append($"|{player.client.user}");
+                sb.Append($"|{player.client.user.Username}|{player.client.UUID}");
             }
             client.Send(sb.ToString());
         }
+        private static void SendToLobbyPlayersPlayerReady(Client client, string lobbyUUID)
+        {
+            Lobby lobby = GameServer.Instance.Lobbies.Find((lb) => lb.UUID == lobbyUUID);
+            lobby.players.ForEach((player) =>
+            {
+                player.client.Send($"Ready|{client.UUID}");
+            });
+        }
+
         internal static void ActOnCommand(Client client, string message)
         {
             string[] data = GetCommandData(message);
@@ -93,14 +112,18 @@ namespace DontBiteMeBoss.Server
                     GameServer.Log(null, $"Client send unknown command: {data[0]}");
                     break;
                 case ClientCommandId.GetLobby:
-                    SendLobbyData(client, GameServer.Instance.Lobbies.Find((lb) => lb.UUID == data[2]));
+                    SendLobbyData(client, GameServer.Instance.Lobbies.Find((lb) => lb.UUID == data[1]));
                     break;
                 case ClientCommandId.JoinLobby:
                     Lobby lb = GameServer.Instance.Lobbies.Find((lb) => lb.UUID == data[1]);
                     ClientJoinLobby(client, lb);
                     break;
+                case ClientCommandId.Ready:
+                    SendToLobbyPlayersPlayerReady(client, data[1]);
+                    break;
             }
         }
+
         private static void CreateLobby(Client client, string lobbyName)
         {
             //Create lobby
@@ -109,14 +132,16 @@ namespace DontBiteMeBoss.Server
             //Send Lobby created
             SendAllCreatedLobby(lb);
             //Send client join mentioned lobby
-            lb._leadersUUID = client.UUID;
             ClientJoinLobby(client, lb);
         }
 
         private static void ClientJoinLobby(Client client, Lobby lb)
         {
-            lb.AddPlayer(client);
-            SendClientJoinLobby(client, lb);
+            if (lb.CurrentPlayers < lb._maxPlayers)
+            {
+                lb.AddPlayer(client);
+                SendClientJoinLobby(client, lb);
+            }
         }
     }
 }

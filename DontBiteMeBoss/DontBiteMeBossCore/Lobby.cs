@@ -31,7 +31,7 @@ namespace DontBiteMeBoss.Core
             _maxPlayers = 4;
             CurrentPlayers = 0;
         }
-        public Lobby(string UUID, string name, int maxPlayers, int currentPlayers, string leadersUUID)
+        public Lobby(string UUID, string name, string leadersUUID, int maxPlayers=4, int currentPlayers=0)
         {
             this.UUID = UUID;
             _name = name;
@@ -42,25 +42,16 @@ namespace DontBiteMeBoss.Core
         public void SetPlayerReadyStatus(LobbyClient player, bool isReady)
         {
             player.isReady = isReady;
-            CheckAllPlayersReady();
         }
 
-        private void CheckAllPlayersReady()
+        public bool CheckAllPlayersReady()
         {
             bool allReady = true;
             foreach (LobbyClient player in players)
                 if (!player.isReady)
                     allReady = false;
 
-            if (allReady)
-            {
-                SetLobbyStatus(LobbyStatus.AllReady);
-
-            }
-            else
-            {
-                SetLobbyStatus(LobbyStatus.WaitingForReady);
-            }
+            return allReady;
         }
 
         private void SetLobbyStatus(LobbyStatus status)
@@ -70,8 +61,8 @@ namespace DontBiteMeBoss.Core
 
         public void AddPlayer(Client client)
         {
-            players.Add(new LobbyClient(client));
             ++CurrentPlayers;
+            players.Add(new LobbyClient(client));
         }
     }
 }

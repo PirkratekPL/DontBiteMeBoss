@@ -33,8 +33,10 @@ namespace DontBiteMeBoss.Core
 
         public void Send(string message)
         {
+
             streamWriter.WriteLine(message);
             streamWriter.Flush();
+
         }
 
         public string Read()

@@ -17,12 +17,13 @@ namespace DontBiteMeBoss.ClientSide
         SpriteBatch spriteBatch;
         public StartingScreenMenu ssMenu;
         public MainMenu mMenu;
+        public LobbyMenu lbMenu;
         public Client thisClient;
         public bool isConnectedToServer = false;
         public Thread ServerConnectionThread = new Thread(CommunicationProc);
 
-        private int windowWidth = 1280;
-        private int windowHeight = 720;
+        public int windowWidth = 1280;
+        public int windowHeight = 720;
         private static DontBiteMeBossClient instance;
         public static DontBiteMeBossClient Get { get { return instance; } }
 
@@ -112,8 +113,8 @@ namespace DontBiteMeBoss.ClientSide
 
         protected override void OnExiting(object sender, EventArgs args)
         {
-            //TODO: send disconnect message
             ServerConnectionThread.Abort();
+            thisClient?.Send("Disconnect");
             base.OnExiting(sender, args);
         }
 
@@ -134,11 +135,11 @@ namespace DontBiteMeBoss.ClientSide
                 }
                 catch(System.IO.IOException ex)
                 {
-                    client?.Send("Disconnect|IOException");
+                    //client?.Send("Disconnect|IOException");
                 }
                 catch(Exception ex)
                 {
-                    game.Exit();
+                    //game.Exit();
                 }
             }
         }
