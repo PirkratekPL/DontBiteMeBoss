@@ -62,7 +62,10 @@ namespace DontBiteMeBoss.Core
         public void AddPlayer(Client client)
         {
             ++CurrentPlayers;
-            players.Add(new LobbyClient(client));
+            LobbyClient lCl = new LobbyClient(client);
+            if (lCl.client.UUID == _leadersUUID)
+                lCl.isReady = true;
+            players.Add(lCl);
         }
     }
 }

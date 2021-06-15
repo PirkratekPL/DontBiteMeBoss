@@ -22,7 +22,7 @@ namespace DontBiteMeBoss.ClientSide
         SomeneJoinedLobby,  //lobby.UUID, Player.UUID, string username, int currentPlayers
         SomeoneLeftLobby,   //UUID
         LobbyStart,         //lobby.UUID
-        PlayerReadyChanged, //UUID, bool isReady
+        PlayerReadyChanged, //UUID
         LobbyData,
         //Ready, TODO:
 
@@ -101,6 +101,8 @@ namespace DontBiteMeBoss.ClientSide
                 case ServerCommandId.SomeoneLeftLobby:
                     break;
                 case ServerCommandId.LobbyStart:
+                    if (data[1] == DontBiteMeBossClient.Get.lbMenu.thisLobby.UUID)
+                        StartGame();
                     break;
                 case ServerCommandId.PlayerReadyChanged:
                     DontBiteMeBossClient.Get.lbMenu.SetPlayerReady(data[1]);
@@ -117,6 +119,10 @@ namespace DontBiteMeBoss.ClientSide
             }
         }
 
+        private static void StartGame()
+        {
+            DontBiteMeBossClient.Get.lbMenu.StartGame();
+        }
 
         private static void CreateLobby(Client client, Lobby lobby)
         {

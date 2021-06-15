@@ -36,7 +36,6 @@ namespace DontBiteMeBoss.Core
 
             streamWriter.WriteLine(message);
             streamWriter.Flush();
-
         }
 
         public string Read()

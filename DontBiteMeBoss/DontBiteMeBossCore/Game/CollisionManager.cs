@@ -23,11 +23,11 @@ namespace DontBiteMeBoss.Core
             get { return CollisionLayers.Keys.ToArray(); }
         }
 
-        List<(string, string)> CollisionRules;
+        List<(string, string)> CollisionRules = new List<(string, string)>();
 
         public void AddLayer(string LayerName)
         {
-            if (CollisionLayers.ContainsKey(LayerName))
+            if (!CollisionLayers.ContainsKey(LayerName))
                 CollisionLayers.Add(LayerName, new List<Collider>());
         }
 
@@ -37,9 +37,11 @@ namespace DontBiteMeBoss.Core
                 CollisionLayers.Remove(LayerName);
         }
 
-        public Collider CreateCollider(string LayerName, bool isSolid, Vector2 Position, Vector2 Size, Vector2 Offset)
+        public Collider CreateCollider(GameObject parent, string LayerName, bool isSolid, Vector2 Position, Vector2 Size, Vector2 Offset)
         {
-            Collider col = new Collider(LayerName, isSolid, Position, Size, Offset);
+
+            Collider col = new Collider(LayerName, isSolid, Size, Offset);
+            parent.AddComponent(col);
             if (CollisionLayers.ContainsKey(LayerName))
                 CollisionLayers[LayerName].Add(col);
             else

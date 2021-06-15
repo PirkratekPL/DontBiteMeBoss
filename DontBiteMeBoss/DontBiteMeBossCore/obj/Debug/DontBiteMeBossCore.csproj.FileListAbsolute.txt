@@ -1,9 +1,5 @@
 C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossCore\bin\Debug\DontBiteMeBossCore.dll
 C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossCore\bin\Debug\DontBiteMeBossCore.pdb
-C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossCore\obj\Debug\DontBiteMeBossCore.csproj.CoreCompileInputs.cache
-C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossCore\obj\Debug\DontBiteMeBossCore.dll
-C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossCore\obj\Debug\DontBiteMeBossCore.pdb
-C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossCore\obj\Debug\DontBiteMeBossCore.csprojAssemblyReference.cache
 C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossCore\bin\Debug\MonoGame.Framework.dll
 C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossCore\bin\Debug\System.ValueTuple.dll
 C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossCore\bin\Debug\SharpDX.DXGI.dll
@@ -20,4 +16,8 @@ C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossCore\bin\Debug\SharpDX.Direct
 C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossCore\bin\Debug\SharpDX.MediaFoundation.xml
 C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossCore\bin\Debug\SharpDX.Direct2D1.xml
 C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossCore\bin\Debug\SharpDX.XAudio2.xml
+C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossCore\obj\Debug\DontBiteMeBossCore.csproj.CoreCompileInputs.cache
 C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossCore\obj\Debug\DontBiteMeBossCore.csproj.CopyComplete
+C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossCore\obj\Debug\DontBiteMeBossCore.dll
+C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossCore\obj\Debug\DontBiteMeBossCore.pdb
+C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossCore\obj\Debug\DontBiteMeBossCore.csprojAssemblyReference.cache

@@ -18,6 +18,7 @@ namespace DontBiteMeBoss.Server
         TcpListener tcpListener;
         private bool isRunning = false;
         public static GameServer Instance;
+        Dictionary<string, Thread> MatchThreads = new Dictionary<string, Thread>();
 
         public GameServer(string ip, int port)
         {
@@ -41,8 +42,6 @@ namespace DontBiteMeBoss.Server
 
         private void StartListening()
         {
-            
-
             Log(null, "Started listening for clients.");
             try
             {
@@ -95,6 +94,15 @@ namespace DontBiteMeBoss.Server
             Lobby lb = new Lobby(Guid.NewGuid().ToString().Replace("-", "").Substring(0, 5), lobbyName, clientUUID);
             Lobbies.Add(lb);
             return lb;
+        }
+
+        public void MatchThread()
+        {
+            GameMatchServer match = new GameMatchServer();
+            while(true)
+            {
+                match.Update();
+            }
         }
 
         public static void Log(object sender, string message)

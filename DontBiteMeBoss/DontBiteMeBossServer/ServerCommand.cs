@@ -18,6 +18,7 @@ namespace DontBiteMeBoss.Server
             GetLobby,
             CreateLobby,
             JoinLobby,
+            LobbyStarted,
             Ready, //player set ready status to true
         }
 
@@ -84,7 +85,7 @@ namespace DontBiteMeBoss.Server
             Lobby lobby = GameServer.Instance.Lobbies.Find((lb) => lb.UUID == lobbyUUID);
             lobby.players.ForEach((player) =>
             {
-                player.client.Send($"Ready|{client.UUID}");
+                player.client.Send($"PlayerReadyChanged|{client.UUID}");
             });
         }
 
@@ -121,7 +122,19 @@ namespace DontBiteMeBoss.Server
                 case ClientCommandId.Ready:
                     SendToLobbyPlayersPlayerReady(client, data[1]);
                     break;
+                case ClientCommandId.LobbyStarted:
+                    StartLobby(data[1]);
+                    break;
             }
+        }
+
+        private static void StartLobby(string lobbyUUID)
+        {
+            Lobby lobby = GameServer.Instance.Lobbies.Find((lb) => lb.UUID == lobbyUUID);
+            lobby.players.ForEach((player) =>
+            {
+                player.client.Send($"LobbyStart|{lobby.UUID}");
+            });
         }
 
         private static void CreateLobby(Client client, string lobbyName)

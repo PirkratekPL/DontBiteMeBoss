@@ -14,10 +14,11 @@ namespace DontBiteMeBoss.ClientSide
     public class DontBiteMeBossClient : Game
     {
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        public SpriteBatch spriteBatch;
         public StartingScreenMenu ssMenu;
         public MainMenu mMenu;
         public LobbyMenu lbMenu;
+        public GameMatchClient gameMatchClient;
         public Client thisClient;
         public bool isConnectedToServer = false;
         public Thread ServerConnectionThread = new Thread(CommunicationProc);
@@ -49,7 +50,7 @@ namespace DontBiteMeBoss.ClientSide
             this.IsMouseVisible = true;
             ssMenu = new StartingScreenMenu(this);
             mMenu = new MainMenu(this);
-
+            gameMatchClient = new GameMatchClient();
             this.Components.Add(ssMenu);
             base.Initialize();
         }
@@ -87,7 +88,8 @@ namespace DontBiteMeBoss.ClientSide
                 Exit();
 
             // TODO: Add your update logic here
-
+            if (gameMatchClient.started)
+                gameMatchClient.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -100,7 +102,8 @@ namespace DontBiteMeBoss.ClientSide
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-
+            if (gameMatchClient.started)
+                gameMatchClient.Draw(spriteBatch);
             base.Draw(gameTime);
         }
 

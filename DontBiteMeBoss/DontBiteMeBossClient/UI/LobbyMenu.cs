@@ -70,7 +70,11 @@ namespace DontBiteMeBoss.ClientSide
         {
             if (thisLobby._leadersUUID == DontBiteMeBossClient.Get.thisClient.UUID)
             {
-                //Start game
+                if(thisLobby.CheckAllPlayersReady())
+                {
+                    //Start game
+                    DontBiteMeBossClient.Get.thisClient.Send($"LobbyStarted|{thisLobby.UUID}");
+                }
             }
             else
             {
@@ -84,6 +88,11 @@ namespace DontBiteMeBoss.ClientSide
             }
         }
 
+        public void StartGame()
+        {
+            game.Components.Remove(game.lbMenu);
+            game.gameMatchClient.started = true;
+        }
         public void SetPlayerReady(string UUID)
         {
             thisLobby.players.Find((player) => player.client.UUID == UUID).isReady = true;
@@ -111,8 +120,8 @@ namespace DontBiteMeBoss.ClientSide
                     Text = data[i],
                     Location = new Vector2(windowRect.Width * 0.25f, windowRect.Height * 0.435f + windowRect.Height * 0.15f * (i - 4) / 2),
                 });
-                Controls.Add(occupiedSlots[(i - 4)/2]);
-                playerSlots[(i - 4)/2].BackgroundColor = Color.DarkGray;
+                Controls.Add(occupiedSlots[(i - 4) / 2]);
+                playerSlots[(i - 4) / 2].BackgroundColor = Color.DarkGray;
                 Client player = new Client();
                 player.UUID = data[i + 1];
                 player.user = new User(data[i], 0L);
