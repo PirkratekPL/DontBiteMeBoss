@@ -13,21 +13,19 @@ namespace DontBiteMeBoss.ClientSide
     public class ClientPlayer : Player
     {
         public bool isMainPlayer;
-        public Texture2D texture;
         GunComponent gunC;
         private bool shotButtonLastPressed = false;
-        Texture2D bulletTexture;
         public ClientPlayer(bool isMainPlayer)
         {
             this.isMainPlayer = isMainPlayer;
-            texture = DontBiteMeBossClient.Get.Content.Load<Texture2D>("assets/sprites/playerSprite");
-            bulletTexture = DontBiteMeBossClient.Get.Content.Load<Texture2D>("assets/sprites/BulletSprite");
             gunC = new GunComponent();
             AddComponent(gunC);
         }
+        public delegate void OnShootDelegate();
+        public event OnShootDelegate OnShoot = delegate { };
         public override void Update(double deltaTime)
         {
-            if(isMainPlayer)
+            if (isMainPlayer && IsAlive)
             {
                 Vector2 moveDir = Vector2.Zero;
                 if (Keyboard.GetState().IsKeyDown(Keys.W))
@@ -39,14 +37,17 @@ namespace DontBiteMeBoss.ClientSide
                 if (Keyboard.GetState().IsKeyDown(Keys.D))
                     moveDir.X += (float)(moveSpeed * deltaTime);
                 Point mousePos = Mouse.GetState().Position;
+                float lastRotation = rotation;
                 rotation = (float)Math.Atan2(mousePos.Y - Position.Y, mousePos.X - Position.X);
+                bool PositionRotationChanged = moveDir != Vector2.Zero || lastRotation != rotation;
                 base.Move(moveDir);
+                if (PositionRotationChanged)
+                    ClientCommand.thisClient.Send($"Move|{ClientCommand.thisClient.UUID}|{Position.X}|{Position.Y}|{rotation}");
                 if (Mouse.GetState().LeftButton == ButtonState.Pressed)
                 {
-                    if (!shotButtonLastPressed)
+                    if (!shotButtonLastPressed && DontBiteMeBossClient.Get.IsActive)
                     {
-                        Bullet newBullet = new Bullet(Position, rotation, bulletTexture);
-                        gunC.Shoot(newBullet);
+                        OnShoot.Invoke();
                         shotButtonLastPressed = true;
                     }
                 }
@@ -54,17 +55,8 @@ namespace DontBiteMeBoss.ClientSide
                 {
                     shotButtonLastPressed = false;
                 }
-
             }
             base.Update(deltaTime);
-        }
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            if(spriteBatch != null)
-            {
-                spriteBatch.Draw(texture, Position, null, texture.Bounds, new Vector2(texture.Bounds.Width / 2, texture.Bounds.Height / 2), rotation);
-                base.Draw(spriteBatch);
-            }
         }
     }
 }

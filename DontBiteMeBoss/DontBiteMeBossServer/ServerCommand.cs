@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Runtime.CompilerServices;
+using System.Threading;
 
 namespace DontBiteMeBoss.Server
 {
@@ -20,6 +21,11 @@ namespace DontBiteMeBoss.Server
             JoinLobby,
             LobbyStarted,
             Ready, //player set ready status to true
+            Shoot,
+            Move,
+            SpawnZombie,
+            ZombieMoved,
+            PlayerDie,
         }
 
         private static ClientCommandId GetCommandId(string command)
@@ -125,6 +131,81 @@ namespace DontBiteMeBoss.Server
                 case ClientCommandId.LobbyStarted:
                     StartLobby(data[1]);
                     break;
+                case ClientCommandId.Shoot:
+                    ClientShoot(data[1], float.Parse(data[2]), float.Parse(data[3]), float.Parse(data[4]));
+                    break;
+                case ClientCommandId.Move:
+                    ClientMove(data[1], float.Parse(data[2]), float.Parse(data[3]), float.Parse(data[4]));
+                    break;
+                case ClientCommandId.SpawnZombie:
+                    ClientSpawnZombie(data[1], data[2], float.Parse(data[3]), float.Parse(data[4]), float.Parse(data[5]), float.Parse(data[6]), float.Parse(data[7]));
+                    break;
+                case ClientCommandId.ZombieMoved:
+                    ClientZombieMoved(data[1], data[2], float.Parse(data[3]), float.Parse(data[4]), float.Parse(data[5]));
+                    break;
+                case ClientCommandId.PlayerDie:
+                    ClientDied(data[1]);
+                    break;
+            }
+        }
+
+        private static void ClientDied(string playerUUID)
+        {
+            Lobby lb = GameServer.Instance.Lobbies.Find((lobby) => lobby.Contains(playerUUID));
+            if (lb != null)
+            {
+                for (int i = 0; i < lb.players.Count; ++i)
+                {
+                    lb.players[i].client.Send($"PlayerDied|{playerUUID}");
+                }
+            }
+        }
+
+        private static void ClientZombieMoved(string playerUUID, string zombieUUID, float posX, float posY, float rotation)
+        {
+            Lobby lb = GameServer.Instance.Lobbies.Find((lobby) => lobby.Contains(playerUUID));
+            if (lb != null)
+            {
+                for (int i = 0; i < lb.players.Count; ++i)
+                {
+                    lb.players[i].client.Send($"ZombieMoved|{zombieUUID}|{posX}|{posY}|{rotation}");
+                }
+            }
+        }
+
+        private static void ClientSpawnZombie(string playerUUID, string zombieUUID, float posX, float posY, float maxHP, float moveSpeed, float damage)
+        {
+            Lobby lb = GameServer.Instance.Lobbies.Find((lobby) => lobby.Contains(playerUUID));
+            if (lb != null)
+            {
+                for (int i = 0; i < lb.players.Count; ++i)
+                {
+                    lb.players[i].client.Send($"SpawnZombie|{playerUUID}|{zombieUUID}|{posX}|{posY}|{maxHP}|{moveSpeed}|{damage}");
+                }
+            }
+        }
+
+        private static void ClientMove(string playerUUID, float posX, float posY, float rotation)
+        {
+            Lobby lb = GameServer.Instance.Lobbies.Find((lobby) => lobby.Contains(playerUUID));
+            if (lb != null)
+            {
+                for (int i = 0; i < lb.players.Count; ++i)
+                {
+                    lb.players[i].client.Send($"Move|{playerUUID}|{posX}|{posY}|{rotation}");
+                }
+            }
+        }
+
+        private static void ClientShoot(string playerUUID, float posX, float posY, float rotation)
+        {
+            Lobby lb = GameServer.Instance.Lobbies.Find((lobby) => lobby.Contains(playerUUID));
+            if(lb != null)
+            {
+                for(int i = 0; i < lb.players.Count; ++i)
+                {
+                    lb.players[i].client.Send($"Shoot|{playerUUID}|{posX}|{posY}|{rotation}");
+                }
             }
         }
 
@@ -134,6 +215,11 @@ namespace DontBiteMeBoss.Server
             lobby.players.ForEach((player) =>
             {
                 player.client.Send($"LobbyStart|{lobby.UUID}");
+                Thread.Sleep(200);
+                for(int i = 0; i<lobby.CurrentPlayers; ++i)
+                {
+                    player.client.Send($"AddPlayer|{lobby.players[i].client.UUID}|{640f}|{360}");
+                }
             });
         }
 

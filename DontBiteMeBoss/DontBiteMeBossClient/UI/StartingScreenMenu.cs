@@ -71,6 +71,7 @@ namespace DontBiteMeBoss.ClientSide
                     InfoLabel.Text = "Connected";
                     game.thisClient = new Client(tcpClient.Client);
                     ClientCommand.AskForUUID(game.thisClient);
+                    ClientCommand.thisClient = game.thisClient;
                     game.ServerConnectionThread.Start(new object[] { game.thisClient, game });
 
                     game.Components.Remove(game.ssMenu);

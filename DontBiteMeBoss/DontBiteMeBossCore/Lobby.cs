@@ -44,6 +44,10 @@ namespace DontBiteMeBoss.Core
             player.isReady = isReady;
         }
 
+        public bool Contains(string playerUUID)
+        {
+            return players.FindIndex((player) => player.client.UUID == playerUUID) != -1;
+        }
         public bool CheckAllPlayersReady()
         {
             bool allReady = true;

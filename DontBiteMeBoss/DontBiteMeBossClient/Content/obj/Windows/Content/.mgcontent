@@ -6,11 +6,13 @@
   <SourceFiles>
     <File>C:/dev/DontBiteMeBoss/DontBiteMeBoss/DontBiteMeBossClient/Content/assets/sprites/Background.png</File>
     <File>C:/dev/DontBiteMeBoss/DontBiteMeBoss/DontBiteMeBossClient/Content/assets/sprites/BulletSprite.png</File>
+    <File>C:/dev/DontBiteMeBoss/DontBiteMeBoss/DontBiteMeBossClient/Content/assets/sprites/playerDeadSprite.png</File>
     <File>C:/dev/DontBiteMeBoss/DontBiteMeBoss/DontBiteMeBossClient/Content/assets/sprites/playerSprite.png</File>
     <File>C:/dev/DontBiteMeBoss/DontBiteMeBoss/DontBiteMeBossClient/Content/assets/sprites/Zombie.png</File>
     <File>C:/dev/DontBiteMeBoss/DontBiteMeBoss/DontBiteMeBossClient/Content/defaultFont.spritefont</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

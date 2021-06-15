@@ -1,4 +1,5 @@
 ﻿using DontBiteMeBoss.Core;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -24,11 +25,15 @@ namespace DontBiteMeBoss.ClientSide
         LobbyStart,         //lobby.UUID
         PlayerReadyChanged, //UUID
         LobbyData,
-        //Ready, TODO:
-
+        AddPlayer,
+        SpawnZombie,
+        ZombieMoved,
+        PlayerDied,
     }
     public static class ClientCommand
     {
+        public static Client thisClient;
+
         //basic commands
         public static ServerCommandId GetCommandId(string command)
         {
@@ -57,6 +62,12 @@ namespace DontBiteMeBoss.ClientSide
             StringBuilder sb = new StringBuilder("GetUUID");
             client.Send(sb.ToString());
         }
+
+        internal static void SendShoot(Vector2 position, float rotation)
+        {
+            thisClient.Send($"Shoot|{thisClient.UUID}|{position.X}|{position.Y}|{rotation}");
+        }
+
         public static void AskToCreateLobby(Client client, string lobbyName)
         {
             client.Send($"CreateLobby|{client.UUID}|{lobbyName}");
@@ -73,8 +84,10 @@ namespace DontBiteMeBoss.ClientSide
             switch (command)
             {
                 case ServerCommandId.Move:
+                    DontBiteMeBossClient.Get.gameMatchClient.PlayerMove(data[1], float.Parse(data[2]), float.Parse(data[3]), float.Parse(data[4]));
                     break;
                 case ServerCommandId.Shoot:
+                    DontBiteMeBossClient.Get.gameMatchClient.ShootClient(float.Parse(data[2]), float.Parse(data[3]), float.Parse(data[4]));
                     break;
                 case ServerCommandId.CollectItem:
                     break;
@@ -115,6 +128,18 @@ namespace DontBiteMeBoss.ClientSide
                     break;
                 case ServerCommandId.LobbyData:
                     ClientSetLobbyData(data);
+                    break;
+                case ServerCommandId.AddPlayer:
+                    DontBiteMeBossClient.Get.gameMatchClient.AddPlayer(data[1], float.Parse(data[2]), float.Parse(data[3]));
+                    break;
+                case ServerCommandId.SpawnZombie:
+                    DontBiteMeBossClient.Get.gameMatchClient.SpawnZombie(data[2], new Vector2(float.Parse(data[3]), float.Parse(data[4])), float.Parse(data[5]), float.Parse(data[6]), float.Parse(data[7]));
+                    break;
+                case ServerCommandId.ZombieMoved:
+                    DontBiteMeBossClient.Get.gameMatchClient.ZombieMoved(data[1], float.Parse(data[2]), float.Parse(data[3]), float.Parse(data[4]));
+                    break;
+                case ServerCommandId.PlayerDied:
+                    DontBiteMeBossClient.Get.gameMatchClient.PlayerDied(data[1]);
                     break;
             }
         }

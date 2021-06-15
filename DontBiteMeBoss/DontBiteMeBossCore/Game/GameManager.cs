@@ -28,9 +28,9 @@ namespace DontBiteMeBoss.Core
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            foreach (GameObject obj in gameObjects)
+            for (int i = 0; i < gameObjects.Count; ++i)
             {
-                obj.Draw(spriteBatch);
+                gameObjects[i].Draw(spriteBatch);
             }
         }
 

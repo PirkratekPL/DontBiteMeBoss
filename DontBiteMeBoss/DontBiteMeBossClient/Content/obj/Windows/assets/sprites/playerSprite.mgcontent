@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SourceFile>C:/dev/DontBiteMeBoss/DontBiteMeBoss/DontBiteMeBossClient/Content/assets/sprites/playerSprite.png</SourceFile>
-  <SourceTime>2021-06-14T12:04:10.7950579+02:00</SourceTime>
+  <SourceTime>2015-01-21T22:55:04.6444022+01:00</SourceTime>
   <DestFile>C:/dev/DontBiteMeBoss/DontBiteMeBoss/DontBiteMeBossClient/Content/bin/Windows/assets/sprites/playerSprite.xnb</DestFile>
-  <DestTime>2021-06-15T10:16:49.032088+02:00</DestTime>
+  <DestTime>2021-06-15T16:32:05.3299977+02:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2018-12-08T17:35:54+01:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

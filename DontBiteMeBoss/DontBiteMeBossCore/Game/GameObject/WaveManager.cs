@@ -21,6 +21,7 @@ namespace DontBiteMeBoss.Core
         private bool waveStarted = false;
         private Random random = new Random();
         public Texture2D zombieTexture;
+        public Client client;
 
         private float delayBetweenWaves = 5;
         private float timeBetweenWaves = 0;
@@ -42,13 +43,15 @@ namespace DontBiteMeBoss.Core
             ZombiesKilled = 0;
             this.isServer = isServer;
         }
-        public WaveManager(Texture2D zombieTexture)
+        public WaveManager(bool isServer, Client client, Texture2D zombieTexture)
         {
             if (Get == null)
                 Get = this;
             CurrentWave = 1;
             ZombiesKilled = 0;
+            this.client = client;
             this.zombieTexture = zombieTexture;
+            this.isServer = isServer;
         }
 
         public void SpawnZombie()
@@ -56,24 +59,42 @@ namespace DontBiteMeBoss.Core
             float multiplier = GetZombiesStatsMultiplier();
             Zombie zombie = new Zombie(GetRandomisedSpawnPosition(), baseZombieHP * multiplier, baseZombieSpeed * multiplier, baseZombieDamage * multiplier, zombieTexture);
             zombie.ZombieDeath += (zb) => { ++ZombiesKilled; GameManager.Get.RemoveGameObject(zb); };
+            zombie.UUID = Guid.NewGuid().ToString().Replace("-", "").Substring(0, 5);
+            zombie.ZombieMove += (zb, pos, rot) =>
+            {
+                zb.Position = pos;
+                zb.rotation = rot;
+                client.Send($"ZombieMoved|{client.UUID}|{zb.UUID}|{pos.X}|{pos.Y}|{rot}");
+            };
+            zombie.ZombieAttack += (zb, playerUUID, damage) =>
+            {
+                Player player = (Player)GameManager.Get.gameObjects.Find((obj) => obj.UUID == playerUUID);
+                if (player.CurrentHP < 0)
+                    client.Send($"PlayerDie|{player.UUID}");
+            };
+            client.Send($"SpawnZombie|{client.UUID}|{zombie.UUID}|{zombie.Position.X}|{zombie.Position.Y}|{zombie.MaxHP}|{zombie.MoveSpeed}|{zombie.Damage}");
             GameManager.Get.AddObject(zombie);
         }
 
+
         public override void Update(double deltaTime)
         {
-            if (waveStarted)
+            if (isServer)
             {
-                if (ZombiesKilled == CurrentWaveMaxZombies)
-                    EndWave();
-            }
-            else
-            {
-                if (timeBetweenWaves < delayBetweenWaves)
-                    timeBetweenWaves += (float)deltaTime;
+                if (waveStarted)
+                {
+                    if (ZombiesKilled == CurrentWaveMaxZombies)
+                        EndWave();
+                }
                 else
-                    StartWave();
+                {
+                    if (timeBetweenWaves < delayBetweenWaves)
+                        timeBetweenWaves += (float)deltaTime;
+                    else
+                        StartWave();
+                }
+                base.Update(deltaTime);
             }
-            base.Update(deltaTime);
         }
 
         private Vector2 GetRandomisedSpawnPosition()
@@ -102,6 +123,7 @@ namespace DontBiteMeBoss.Core
         private void StartWave()
         {
             waveStarted = true;
+            ZombiesKilled = 0;
             CurrentWaveMaxZombies = (int)Math.Floor(baseZombieSpawnLimit * GetZombiesStatsMultiplier());
             for (int i = 0; i < CurrentWaveMaxZombies; ++i)
             {

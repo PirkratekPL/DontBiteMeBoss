@@ -32,3 +32,4 @@ C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossClient\obj\x86\Debug\DontBite
 C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossClient\obj\x86\Debug\DontBiteMeBossClient.pdb
 C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossClient\bin\Windows\x86\Debug\Content\assets\sprites\Background.xnb
 C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossClient\bin\Windows\x86\Debug\Content\assets\sprites\Zombie.xnb
+C:\dev\DontBiteMeBoss\DontBiteMeBoss\DontBiteMeBossClient\bin\Windows\x86\Debug\Content\assets\sprites\playerDeadSprite.xnb

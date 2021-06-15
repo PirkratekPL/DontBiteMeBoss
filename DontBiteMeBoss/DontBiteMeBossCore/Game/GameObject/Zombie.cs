@@ -18,12 +18,16 @@ namespace DontBiteMeBoss.Core
         public Player target;
         public Texture2D texture;
 
-        private float minimalAttackDistance = 10;
+        private float minimalAttackDistance = 16;
         private float attackDelay = 2;
         private float attackDelayTimer = 2;
 
-        public delegate void OnZombieDeath(Zombie zombie);
-        public event OnZombieDeath ZombieDeath = delegate { };
+        public delegate void ZombieDelegate(Zombie zombie);
+        public delegate void ZombieAttackDelegate(Zombie zombie, string playerUUID, float damage);
+        public delegate void ZombieMoveDelegate(Zombie zombie, Vector2 Position, float rotation);
+        public event ZombieDelegate ZombieDeath = delegate { };
+        public event ZombieMoveDelegate ZombieMove = delegate { };
+        public event ZombieAttackDelegate ZombieAttack = delegate { };
         public Zombie(Vector2 position, float MaxHP, float moveSpeed, float damage)
         {
             Position = position;
@@ -42,10 +46,10 @@ namespace DontBiteMeBoss.Core
 
         public void GetTarget()
         {
-            Type t;
-            foreach (GameObject obj in GameManager.Get.gameObjects)
-                t = obj.GetType();
-            target = (Player)GameManager.Get.gameObjects.Find((obj) => obj.GetType().Name == "ClientPlayer" || obj.GetType().Name == "Player");
+            List<GameObject> players = GameManager.Get.gameObjects.FindAll((obj) => obj.GetType().Name == "ClientPlayer" || obj.GetType().Name == "Player");
+            players = players.FindAll((player) => ((Player)player).CurrentHP > 0);
+            if (players != null)
+                target = (Player)players[GameRandom.NextInt(0, players.Count)];
         }
 
         public void Move(double deltaTime)
@@ -54,8 +58,7 @@ namespace DontBiteMeBoss.Core
             {
                 Vector2 direction = target.Position - Position;
                 direction.Normalize();
-                Position += direction * MoveSpeed * (float)deltaTime;
-                rotation = (float)Math.Atan2(direction.Y, direction.X);
+                this.ZombieMove.Invoke(this, Position + direction * MoveSpeed * (float)deltaTime, (float)Math.Atan2(direction.Y, direction.X));
             }
         }
 
@@ -87,6 +90,7 @@ namespace DontBiteMeBoss.Core
             if (Vector2.DistanceSquared(Position, target.Position) < minimalAttackDistance)
             {
                 target.TakeDamage(Damage);
+                ZombieAttack.Invoke(this, target.UUID, Damage);
             }
         }
 
@@ -111,7 +115,7 @@ namespace DontBiteMeBoss.Core
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if(spriteBatch != null)
+            if (spriteBatch != null)
             {
                 spriteBatch.Draw(texture, Position, null, texture.Bounds, new Vector2(texture.Width / 2f, texture.Height / 2f), rotation);
                 base.Draw(spriteBatch);

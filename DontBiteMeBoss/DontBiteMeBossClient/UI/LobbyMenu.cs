@@ -29,6 +29,7 @@ namespace DontBiteMeBoss.ClientSide
         public override void Initialize()
         {
             game.thisClient.Send($"GetLobby|{thisLobby.UUID}");
+            game.gameMatchClient = new GameMatchClient(true);
             base.Initialize();
         }
         public void AddUser(Client client)
@@ -90,8 +91,9 @@ namespace DontBiteMeBoss.ClientSide
 
         public void StartGame()
         {
+            game.gameMatchClient.leadersUUID = thisLobby._leadersUUID;
             game.Components.Remove(game.lbMenu);
-            game.gameMatchClient.started = true;
+            game.gameMatchClient.Start();
         }
         public void SetPlayerReady(string UUID)
         {

@@ -10,18 +10,17 @@ namespace DontBiteMeBoss.Core
 {
     public class Player : GameObject
     {
-        public string playerUUID;
         public float moveSpeed = 150;
         public float MaxHP = 500;
         public float CurrentHP;
-        public float LifeRegen = 10;
+        public float LifeRegen = 50;
         public float MaxLyingTime = 20;
         public float MaxRespawnTime = 5;
         public float lyingTime = 0;
         public float respingTime = 0;
         public bool IsOnFloor = false;
-        List<Player> otherPlayers = new List<Player>();
-        Texture2D texture;
+        public bool IsAlive = true;
+        public Texture2D texture;
         public Player()
         {
             this.CurrentHP = MaxHP;
@@ -42,10 +41,11 @@ namespace DontBiteMeBoss.Core
         }
         public override void Update(double deltaTime)
         {
-            if (IsOnFloor)
+            if (CurrentHP > 0)
             {
-                lyingTime += (float)deltaTime;
-
+                CurrentHP += LifeRegen * (float)deltaTime;
+                if (CurrentHP > MaxHP)
+                    CurrentHP = MaxHP;
             }
             base.Update(deltaTime);
         }
@@ -65,6 +65,7 @@ namespace DontBiteMeBoss.Core
             CurrentHP -= damage;
             if (CurrentHP <= 0)
             {
+                IsAlive = false;
                 LieOnGround();
             }
         }

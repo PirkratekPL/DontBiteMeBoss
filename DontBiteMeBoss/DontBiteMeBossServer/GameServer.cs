@@ -34,9 +34,9 @@ namespace DontBiteMeBoss.Server
             isRunning = true;
             Log(null, "Server started!");
             listenerThread.Start();
-            while(isRunning)
+            while (isRunning)
             {
-
+                //TODO: Dedicated server console commands here;
             }
         }
 
@@ -77,10 +77,12 @@ namespace DontBiteMeBoss.Server
                 {
                     if (client != null && (command = client.Read()) != string.Empty)
                     {
-                        Log(client.UUID, command);
+                        if (!command.Contains("Move") && !command.Contains("ZombieMoved"))
+                            Log(client.UUID, command);
                         ServerCommand.ActOnCommand(client, command);
                     }
-                } catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
                     client.socket.Disconnect(false);
                     Clients.Remove(client);
@@ -99,7 +101,7 @@ namespace DontBiteMeBoss.Server
         public void MatchThread()
         {
             GameMatchServer match = new GameMatchServer();
-            while(true)
+            while (true)
             {
                 match.Update();
             }
