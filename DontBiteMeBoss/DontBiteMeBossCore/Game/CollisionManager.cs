@@ -9,10 +9,11 @@ namespace DontBiteMeBoss.Core
 {
     public class CollisionManager
     {
-        Dictionary<string, List<Collider>> CollisionLayers;
+        Dictionary<string, List<Collider>> CollisionLayers = new Dictionary<string, List<Collider>>();
 
         public static CollisionManager Instance;
-
+        public delegate void OnCollisionDelegate(string uuid1, string uuid2);
+        public event OnCollisionDelegate OnCollision = delegate { };
         public CollisionManager()
         {
             if (Instance == null)
@@ -63,13 +64,15 @@ namespace DontBiteMeBoss.Core
         {
             foreach((string,string) Rule in CollisionRules)
             {
-                foreach(Collider col1 in CollisionLayers[Rule.Item1])
+                for(int i = 0; i < CollisionLayers[Rule.Item1].Count; ++i)
                 {
-                    foreach(Collider col2 in CollisionLayers[Rule.Item2])
+                    Collider col1 = CollisionLayers[Rule.Item1][i];
+                    for (int j = 0; j < CollisionLayers[Rule.Item2].Count; ++j)
                     {
+                        Collider col2 = CollisionLayers[Rule.Item2][j];
                         if (CheckCollision(col1, col2))
                         {
-                            //col1.OnCollision(col2,null);
+                            OnCollision.Invoke(col1.parent.UUID, col2.parent.UUID);
                         }
                     }
                 }
@@ -84,6 +87,11 @@ namespace DontBiteMeBoss.Core
         public void RemoveRule(string Layer1, string Layer2)
         {
             CollisionRules.Remove((Layer1, Layer2));
+        }
+
+        public void RemoveColliderFromLayer(string layer, Collider col)
+        {
+            CollisionLayers[layer].Remove(col);
         }
     }
 }

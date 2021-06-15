@@ -13,13 +13,10 @@ namespace DontBiteMeBoss.ClientSide
     public class ClientPlayer : Player
     {
         public bool isMainPlayer;
-        GunComponent gunC;
         private bool shotButtonLastPressed = false;
         public ClientPlayer(bool isMainPlayer)
         {
             this.isMainPlayer = isMainPlayer;
-            gunC = new GunComponent();
-            AddComponent(gunC);
         }
         public delegate void OnShootDelegate();
         public event OnShootDelegate OnShoot = delegate { };

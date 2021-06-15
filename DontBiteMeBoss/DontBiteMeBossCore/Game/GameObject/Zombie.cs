@@ -17,6 +17,7 @@ namespace DontBiteMeBoss.Core
 
         public Player target;
         public Texture2D texture;
+        public Collider col;
 
         private float minimalAttackDistance = 16;
         private float attackDelay = 2;

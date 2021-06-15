@@ -10,12 +10,12 @@ namespace DontBiteMeBoss.Core
         public Vector2 Position;
         public Vector2 Size;
         public Vector2 Offset;
-        public event EventHandler OnCollision;
+
+
         public Collider(string LayerName,bool isSolid, Vector2 Size, Vector2 Offset)
         {
             this.Layer = LayerName;
             this.isSolid = isSolid;
-            this.Position = parent.Position;
             this.Size = Size;
             this.Offset = Offset;
         }

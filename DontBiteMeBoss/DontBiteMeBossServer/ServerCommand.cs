@@ -202,9 +202,10 @@ namespace DontBiteMeBoss.Server
             Lobby lb = GameServer.Instance.Lobbies.Find((lobby) => lobby.Contains(playerUUID));
             if(lb != null)
             {
+                string bulletUUID = Guid.NewGuid().ToString().Replace("-", "").Substring(0, 5);
                 for(int i = 0; i < lb.players.Count; ++i)
                 {
-                    lb.players[i].client.Send($"Shoot|{playerUUID}|{posX}|{posY}|{rotation}");
+                    lb.players[i].client.Send($"Shoot|{bulletUUID}|{playerUUID}|{posX}|{posY}|{rotation}");
                 }
             }
         }

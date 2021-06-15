@@ -58,22 +58,9 @@ namespace DontBiteMeBoss.Core
         {
             float multiplier = GetZombiesStatsMultiplier();
             Zombie zombie = new Zombie(GetRandomisedSpawnPosition(), baseZombieHP * multiplier, baseZombieSpeed * multiplier, baseZombieDamage * multiplier, zombieTexture);
-            zombie.ZombieDeath += (zb) => { ++ZombiesKilled; GameManager.Get.RemoveGameObject(zb); };
             zombie.UUID = Guid.NewGuid().ToString().Replace("-", "").Substring(0, 5);
-            zombie.ZombieMove += (zb, pos, rot) =>
-            {
-                zb.Position = pos;
-                zb.rotation = rot;
-                client.Send($"ZombieMoved|{client.UUID}|{zb.UUID}|{pos.X}|{pos.Y}|{rot}");
-            };
-            zombie.ZombieAttack += (zb, playerUUID, damage) =>
-            {
-                Player player = (Player)GameManager.Get.gameObjects.Find((obj) => obj.UUID == playerUUID);
-                if (player.CurrentHP < 0)
-                    client.Send($"PlayerDie|{player.UUID}");
-            };
+
             client.Send($"SpawnZombie|{client.UUID}|{zombie.UUID}|{zombie.Position.X}|{zombie.Position.Y}|{zombie.MaxHP}|{zombie.MoveSpeed}|{zombie.Damage}");
-            GameManager.Get.AddObject(zombie);
         }
 
 
@@ -112,7 +99,7 @@ namespace DontBiteMeBoss.Core
 
         public int GetMaxZombiesSpawn()
         {
-            return baseZombieSpawnLimit + CurrentWave;
+            return baseZombieSpawnLimit + CurrentWave/2;
         }
 
         private float GetZombiesStatsMultiplier()
@@ -124,7 +111,7 @@ namespace DontBiteMeBoss.Core
         {
             waveStarted = true;
             ZombiesKilled = 0;
-            CurrentWaveMaxZombies = (int)Math.Floor(baseZombieSpawnLimit * GetZombiesStatsMultiplier());
+            CurrentWaveMaxZombies = GetMaxZombiesSpawn();
             for (int i = 0; i < CurrentWaveMaxZombies; ++i)
             {
                 SpawnZombie();

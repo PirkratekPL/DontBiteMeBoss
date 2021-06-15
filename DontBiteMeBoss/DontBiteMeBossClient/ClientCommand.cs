@@ -87,7 +87,7 @@ namespace DontBiteMeBoss.ClientSide
                     DontBiteMeBossClient.Get.gameMatchClient.PlayerMove(data[1], float.Parse(data[2]), float.Parse(data[3]), float.Parse(data[4]));
                     break;
                 case ServerCommandId.Shoot:
-                    DontBiteMeBossClient.Get.gameMatchClient.ShootClient(float.Parse(data[2]), float.Parse(data[3]), float.Parse(data[4]));
+                    DontBiteMeBossClient.Get.gameMatchClient.ShootClient(data[1], float.Parse(data[3]), float.Parse(data[4]), float.Parse(data[5]));
                     break;
                 case ServerCommandId.CollectItem:
                     break;

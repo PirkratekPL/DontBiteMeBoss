@@ -14,6 +14,7 @@ namespace DontBiteMeBoss.Core
         public float speed = 350;
         public float maxLifetime = 10, totalLifeTime = 0;
         public Texture2D texture;
+        public Collider col;
         public Bullet(Vector2 position, float rotation)
         {
             Position = position;
