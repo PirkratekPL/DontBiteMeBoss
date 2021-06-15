@@ -66,7 +66,7 @@ namespace DontBiteMeBoss.ClientSide
             {
                 try
                 {
-                    tcpClient = new TcpClient("127.0.0.1", 34343 + tries);
+                    tcpClient = new TcpClient("10.10.10.1", 34343 + tries);
                     isConnected = true;
                     InfoLabel.Text = "Connected";
                     game.thisClient = new Client(tcpClient.Client);
