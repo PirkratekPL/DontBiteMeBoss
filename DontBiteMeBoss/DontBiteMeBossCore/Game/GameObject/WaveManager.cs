@@ -104,7 +104,7 @@ namespace DontBiteMeBoss.Core
 
         private float GetZombiesStatsMultiplier()
         {
-            return 1 + CurrentWave * CurrentWave / 80;
+            return 1f + CurrentWave * CurrentWave / 80f;
         }
 
         private void StartWave()

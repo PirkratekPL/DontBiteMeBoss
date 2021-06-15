@@ -51,7 +51,8 @@ namespace DontBiteMeBoss.ClientSide
         private void CollisionManager_OnCollision(string uuid1, string uuid2)
         {
             Bullet bullet = (Bullet)gameMgr.gameObjects.Find((obj) => obj.UUID == uuid1);
-            colMgr.RemoveColliderFromLayer("Bullet", bullet.col);
+            if (bullet != null)
+                colMgr.RemoveColliderFromLayer("Bullet", bullet.col);
             gameMgr.gameObjects.Remove(bullet);
             Zombie zombie = (Zombie)gameMgr.gameObjects.Find((obj) => obj.UUID == uuid2);
             if (zombie != null)
